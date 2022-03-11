@@ -12,7 +12,7 @@ def Main():
     print('measure1:', brightness)
     toSet = (3000 - brightness) / 3000
    
-    if brightness > 3000 :
+    if toSet < 0 :
       toSet = 0
       
     hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=2000)
@@ -24,7 +24,7 @@ def Main():
     print('average:', avg)
     toSet =  (3000 - avg) / 3000
     
-    if brightness > 3000 :
+    if toSet < 0 :
       toSet = 0
       
     hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition = 2000)
