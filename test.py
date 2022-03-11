@@ -5,12 +5,19 @@ from envirophat import light
 #cloud.authenticate()
 def Main():
   try:
-    devices = hub.devices()
-    for id, dev in devices.items():
-      print(id,dev['name'])
+    #devices = hub.devices()
+    #for id, dev in devices.items():
+     # print(id,dev['name'])
     brightness = light.light()
     print(brightness)
     toSet = (3000 - brightness) / 3000
+    if toSet < 0 :
+      toSet = 0
+    hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=0)
+    sleep(5)
+    brightness2 = light.light()
+    avg = (brightness + brightness2)/2
+    toSet =  (3000 - avg) / 3000
     if toSet < 0 :
       toSet = 0
     hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=0)
