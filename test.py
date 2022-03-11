@@ -1,15 +1,15 @@
 from time import sleep
 from cozify import hub
 from cozify import cloud
-# from envirophat import light
+from envirophat import light
 #cloud.authenticate()
-cloud.ping()
 def Main():
   try:
     devices = hub.devices()
     for id, dev in devices.items():
       print(id,dev['name'])
-    #brightness = light.light()
+    brightness = light.light()
+    print(brightness)
     #toSet = brightness / 100
     hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', 1, transition=0)
     sleep(300)
