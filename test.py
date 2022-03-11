@@ -10,9 +10,11 @@ def Main():
       print(id,dev['name'])
     brightness = light.light()
     print(brightness)
-    #toSet = brightness / 100
-    hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', 1, transition=0)
-    sleep(300)
+    toSet = (3000 - brightness) / 3000
+    if toSet < 0 :
+      toSet = 0
+    hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=0)
+    sleep(10)
   except:
     sleep(5)
 
