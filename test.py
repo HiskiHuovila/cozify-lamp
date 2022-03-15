@@ -5,6 +5,8 @@ from envirophat import light
 #cloud.authenticate()
 def Main():
   try:
+    if hub.ping:
+      print("connected to device")
     #devices = hub.devices()
     #for id, dev in devices.items():
      # print(id,dev['name'])
