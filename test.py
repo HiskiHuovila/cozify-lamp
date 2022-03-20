@@ -26,6 +26,7 @@ def Automation():
       toSet = previousSetBrigthness + 0.1
       hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=1000)
       previousSetBrigthness = toSet
+      print("successfully modified brightness")
 
     if brightness > target-margin:
       toSet = previousSetBrigthness - 0.1
@@ -36,9 +37,12 @@ def Automation():
       else:
         hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=1000)
         previousSetBrigthness = toSet
+
+      print("successfully modified brightness")
     else:
       print("Gang Gang, in target")
 
+    
     sleep(2)
   except:
     sleep(2)
