@@ -8,7 +8,7 @@ import sys
 target = 3000
 previousSetBrigthness = 0.5
 margin = 100
-automation = true
+automation = True
 
 #cloud.authenticate()
 def Automation():
@@ -22,15 +22,20 @@ def Automation():
     print('measure1:', brightness)
     
 
-    if brightness > target+margin:
+    if brightness < target+margin:
       toSet = previousSetBrigthness + 0.1
       hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=1000)
       previousSetBrigthness = toSet
 
-    if brightness < target-margin:
+    if brightness > target-margin:
       toSet = previousSetBrigthness - 0.1
-      hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=1000)
-      previousSetBrigthness = toSet
+
+      if(toSet <= 0):
+        hub.device_off('eba972f3-c624-436f-b49a-e4bae033eb2c')
+        previousSetBrigthness = 0
+      else:
+        hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=1000)
+        previousSetBrigthness = toSet
     else:
       print("Gang Gang, in target")
 
