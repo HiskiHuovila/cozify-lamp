@@ -66,7 +66,7 @@ def Automation():
 run = True
 while(run):
   try: 
-    input = select.select([sys.stdin], [], [], 1)[0]
+    input = select.select([sys.stdin], [], [], 1)[0] # TODO!!!!
     if input:
         value = sys.stdin.readline().rstrip()
  
