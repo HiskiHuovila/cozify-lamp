@@ -30,7 +30,7 @@ def Automation():
     global status
 
     if brightness < target-margin:
-      toSet = previousSetBrigthness + 0.05
+      toSet = min(previousSetBrigthness + 0.05,1)
       if not status:
         print("Turning lamp on")
         hub.device_on('eba972f3-c624-436f-b49a-e4bae033eb2c')
@@ -39,7 +39,7 @@ def Automation():
       previousSetBrigthness = toSet
       print("successfully modified brightness to ",toSet)
 
-    if brightness > target+margin:
+    elif brightness > target+margin:
       toSet = previousSetBrigthness - 0.05
       if(toSet <= 0):
         print("Turning lamp off ")
@@ -51,6 +51,7 @@ def Automation():
         previousSetBrigthness = toSet
 
       print("successfully modified brightness to ", toSet)
+
     else:
       print("Gang Gang, in target")
 
