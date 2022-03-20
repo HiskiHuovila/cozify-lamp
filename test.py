@@ -23,7 +23,9 @@ def Automation():
      # print(id,dev['name'])
     brightness = light.light()
     print('measure1:', brightness)
-    
+    global previousSetBrigthness
+    global margin
+    global target
     print("Up: ",brightness < target-margin)
     print("Down: ",brightness > target+margin)
 
