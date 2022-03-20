@@ -12,6 +12,7 @@ target = 3000
 previousSetBrigthness = 0.5
 margin = 100
 automation = True
+status = True
 
 #cloud.authenticate()
 def Automation():
@@ -26,37 +27,38 @@ def Automation():
     global previousSetBrigthness
     global margin
     global target
-    print("Up: ",brightness < target-margin)
-    print("Down: ",brightness > target+margin)
-
+    global status
 
     if brightness < target-margin:
-      toSet = previousSetBrigthness + 0.1
-      print("New brightness is ", toSet)
-      hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=1000)
+      toSet = previousSetBrigthness + 0.05
+      if not status:
+        print("Turning lamp on")
+        hub.device_on('eba972f3-c624-436f-b49a-e4bae033eb2c')
+        status = True
+      hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=500)
       previousSetBrigthness = toSet
-      print("successfully modified brightness")
+      print("successfully modified brightness to ",toSet)
 
     if brightness > target+margin:
-      toSet = previousSetBrigthness - 0.1
-      print("New brightness is ", toSet)
+      toSet = previousSetBrigthness - 0.05
       if(toSet <= 0):
-        print("Turning off with target ", toSet)
+        print("Turning lamp off ")
+        status = False
         hub.device_off('eba972f3-c624-436f-b49a-e4bae033eb2c')
         previousSetBrigthness = 0
       else:
-        hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=1000)
+        hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=500)
         previousSetBrigthness = toSet
 
-      print("successfully modified brightness")
+      print("successfully modified brightness to ", toSet)
     else:
       print("Gang Gang, in target")
 
     
-    sleep(2)
+    sleep(0.5)
   except:
     print("error connecting to cozify", sys.exc_info()[0])
-    sleep(2)
+    sleep(0.5)
 
 
 #code starts here
@@ -67,7 +69,7 @@ while(run):
     if input:
         value = sys.stdin.readline().rstrip()
  
-        if (value == "num0"):
+        if (value == "q"):
             automation = not automation
             print(f"Automation set to {automation}")
         else:
