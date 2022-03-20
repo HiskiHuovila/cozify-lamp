@@ -53,7 +53,7 @@ def Automation():
     
     sleep(2)
   except:
-    print("error connecting to cozify")
+    print("error connecting to cozify", sys.exc_info()[0])
     sleep(2)
 
 
