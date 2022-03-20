@@ -5,6 +5,9 @@ from envirophat import light
 import select
 import sys
 
+print("Started operating heavy machinery")
+cloud.authenticate()
+
 target = 3000
 previousSetBrigthness = 0.5
 margin = 100
@@ -13,8 +16,8 @@ automation = True
 #cloud.authenticate()
 def Automation():
   try:
-    #if hub.ping:
-    #  print("connected to device")
+    if hub.ping:
+      print("connected to device")
     #devices = hub.devices()
     #for id, dev in devices.items():
      # print(id,dev['name'])
