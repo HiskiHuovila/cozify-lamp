@@ -45,6 +45,7 @@ def Automation():
     
     sleep(2)
   except:
+    print("error connecting to cozify")
     sleep(2)
 
 
