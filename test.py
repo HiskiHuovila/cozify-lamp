@@ -24,15 +24,18 @@ def Automation():
     brightness = light.light()
     print('measure1:', brightness)
     
+    print("Up: ",brightness < target-margin)
+    print("Down: ",brightness > target+margin)
 
-    if brightness < target+margin:
+
+    if brightness < target-margin:
       toSet = previousSetBrigthness + 0.1
       print("New brightness is ", toSet)
       hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=1000)
       previousSetBrigthness = toSet
       print("successfully modified brightness")
 
-    if brightness > target-margin:
+    if brightness > target+margin:
       toSet = previousSetBrigthness - 0.1
       print("New brightness is ", toSet)
       if(toSet <= 0):
