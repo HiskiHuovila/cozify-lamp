@@ -5,8 +5,8 @@ from envirophat import light
 import select
 import sys
 
-print("Started operating heavy machinery")
-cloud.authenticate()
+print("Started operating heavy machinery, status: ", cloud.authenticate())
+
 
 target = 3000
 previousSetBrigthness = 0.5
@@ -27,14 +27,16 @@ def Automation():
 
     if brightness < target+margin:
       toSet = previousSetBrigthness + 0.1
+      print("New brightness is ", toSet)
       hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=1000)
       previousSetBrigthness = toSet
       print("successfully modified brightness")
 
     if brightness > target-margin:
       toSet = previousSetBrigthness - 0.1
-
+      print("New brightness is ", toSet)
       if(toSet <= 0):
+        print("Turning off with target ", toSet)
         hub.device_off('eba972f3-c624-436f-b49a-e4bae033eb2c')
         previousSetBrigthness = 0
       else:
