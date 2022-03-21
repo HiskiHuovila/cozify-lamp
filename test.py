@@ -105,10 +105,12 @@ while run:
     #SETTING BRIGHTNESSS TARGET
     if keyword.is_pressed('q'):
       target =- 100
+    if keyword.is_pressed('w'):
+      target = ogtarget
     if keyword.is_pressed('e'):
       target =+ 100
     
-    # COLOR TEMPERATURE DOESN DO SHIT RIGHTNOW
+    # COLOR TEMPERATURE DOESN'T DO SHIT RIGHT NOW
     if keyword.is_pressed('a'):
       moodtarget =- 100
     if keyword.is_pressed('s'):
