@@ -121,3 +121,6 @@ while run:
     run = False
   except:
     print('There was a ****** error!')
+
+thread.do_run = False
+thread.join()
