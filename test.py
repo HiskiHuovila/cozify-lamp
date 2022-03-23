@@ -82,6 +82,7 @@ def main():
 
   global previousSetBrigthness
 
+  run = True
   #code starts here
   while run:
     try: 
