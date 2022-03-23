@@ -32,8 +32,8 @@ def Automation():
   global status
 
   try:
-    #if hub.ping:
-    #  print("connected to device")
+    if hub.ping:
+      print("connected to device")
     #devices = hub.devices()
     #for id, dev in devices.items():
     # print(id,dev['name'])
@@ -44,7 +44,7 @@ def Automation():
 
     # TURN UP IF LOWER THAN TARGET
     if brightness < target-margin:
-      toSet = min(prev + 0.05,1)
+      toSet = min(previousSetBrigthness + 0.05,1)
       if not status:
         print("Turning lamp on")
         hub.device_on('eba972f3-c624-436f-b49a-e4bae033eb2c')
@@ -56,7 +56,7 @@ def Automation():
 
     # TURN DOWN IF HIGHER THAN TARGET
     elif brightness > target+margin:
-      toSet = prev - 0.05
+      toSet = previousSetBrigthness - 0.05
       if(toSet <= 0 & status):
         print("Turning lamp off ")
         status = False
