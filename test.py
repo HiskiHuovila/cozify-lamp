@@ -8,15 +8,11 @@ import keyboard
 import sys
 
 print("Started operating heavy machinery, status: ", cloud.authenticate())
-# ORIGINAL TARGETS
 
-ogtarget = 3000
-moodtarget = 3000
 
 # SET STARTING VALUES
 
-target = ogtarget
-moodtarget = moodtarget
+target = 3000
 previousSetBrigthness = 0.5
 margin = 100
 automation = True
@@ -40,7 +36,7 @@ def Automation():
     brightness = light.light()
     print('measure1:', brightness)
 
-    toSet = 0
+    toSet = 0.5
 
     # TURN UP IF LOWER THAN TARGET
     if brightness < target-margin:
@@ -48,6 +44,8 @@ def Automation():
       if not status:
         print("Turning lamp on")
         hub.device_on('eba972f3-c624-436f-b49a-e4bae033eb2c')
+        hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=200)
+        previousSetBrigthness = toSet
         status = True
       else:
         hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=200)
@@ -72,11 +70,11 @@ def Automation():
       print("Gang Gang, in target")
 
     
-    sleep(0.5)
+    sleep(0.2)
     return previousSetBrigthness
   except:
     print("error connecting to cozify", sys.exc_info()[0])
-    sleep(0.1)
+    sleep(0.2)
 
 def main():
 
@@ -85,7 +83,7 @@ def main():
   global previousSetBrigthness
 
   #code starts here
-  while 1:
+  while run:
     try: 
       Automation()
       print(f"{previousSetBrigthness}")
@@ -93,5 +91,4 @@ def main():
     except KeyboardInterrupt :
       run = False
 
-print(cloud.authenticate())
 main()
