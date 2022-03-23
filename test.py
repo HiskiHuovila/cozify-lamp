@@ -15,8 +15,8 @@ print("Started operating heavy machinery, status: ", cloud.authenticate())
 target = 3000
 previousSetBrigthness = 0.5
 margin = 100
-automation = True
-status = True
+#automation = True
+status = True   #boolean on off
 
 # AUTOMATION LOOP
 def Automation():
@@ -24,8 +24,8 @@ def Automation():
   global target
   global previousSetBrigthness
   global margin
-  global automation
-  global status
+  #global automation
+  global status  #boolean on off
 
   try:
     if hub.ping:
@@ -41,18 +41,19 @@ def Automation():
     # TURN UP IF LOWER THAN TARGET
     if brightness < target-margin:
       toSet = min(previousSetBrigthness + 0.05,1)
-      if not status:
+      if not status:        #checking is lamp off
         print("Turning lamp on")
         hub.device_on('eba972f3-c624-436f-b49a-e4bae033eb2c')
         hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=200)
         previousSetBrigthness = toSet
-        status = True
+        print("successfully modified brightness to: ",toSet)
+        status = True    #setting lamp on
       elif toSet < 1:
         hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=200)
         previousSetBrigthness = toSet
-        print("successfully modified brightness to ",toSet)
+        print("successfully modified brightness to: ",toSet)
       else:
-        print("sdfihl")
+        print("maximum lighting")
 
     # TURN DOWN IF HIGHER THAN TARGET
     elif brightness > target+margin:
