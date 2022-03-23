@@ -4,8 +4,7 @@ from cozify import hub
 from cozify import cloud
 from envirophat import light
 import threading
-import keyword
-import select
+import keyboard
 import sys
 
 print("Started operating heavy machinery, status: ", cloud.authenticate())
@@ -106,21 +105,21 @@ run = True
 while run:
   try:
     #SETTING BRIGHTNESSS TARGET
-    if keyword.is_pressed('q'):
+    if keyboard.is_pressed('q'):
       target =- 100
-    if keyword.is_pressed('w'):
+    if keyboard.is_pressed('w'):
       target = ogtarget
-    if keyword.is_pressed('e'):
+    if keyboard.is_pressed('e'):
       target =+ 100
     
     # COLOR TEMPERATURE DOESN'T DO SHIT RIGHT NOW
-    if keyword.is_pressed('a'):
+    if keyboard.is_pressed('a'):
       moodtarget =- 100
-    if keyword.is_pressed('s'):
+    if keyboard.is_pressed('s'):
       moodtarget =+ 100
 
     # TOGGLE AUTOMATION
-    if keyword.is_pressed('t'):
+    if keyboard.is_pressed('t'):
       automation = not automation
   except KeyboardInterrupt:
     run = False
