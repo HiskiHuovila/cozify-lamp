@@ -73,11 +73,11 @@ def Automation():
       print("Gang Gang, in target")
 
     
-    sleep(0.3)
+    sleep(0.4)
     return previousSetBrigthness
   except:
     print("error connecting to cozify", sys.exc_info()[0])
-    sleep(0.3)
+    sleep(0.4)
 
 def main():
 
