@@ -93,4 +93,5 @@ def main():
     except KeyboardInterrupt :
       run = False
 
+print(cloud.authenticate())
 main()
