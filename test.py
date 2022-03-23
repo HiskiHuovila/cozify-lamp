@@ -23,7 +23,13 @@ automation = True
 status = True
 
 # AUTOMATION LOOP
-def Automation(target, prev, margin, status):
+def Automation():
+
+  global target
+  global previousSetBrigthness
+  global margin
+  global automation
+  global status
 
   try:
     #if hub.ping:
@@ -35,7 +41,6 @@ def Automation(target, prev, margin, status):
     print('measure1:', brightness)
 
     toSet = 0
-    newprev = prev
 
     # TURN UP IF LOWER THAN TARGET
     if brightness < target-margin:
@@ -46,20 +51,20 @@ def Automation(target, prev, margin, status):
         status = True
       else:
         hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=200)
-        newprev = toSet
+        previousSetBrigthness = toSet
         print("successfully modified brightness to ",toSet)
 
     # TURN DOWN IF HIGHER THAN TARGET
     elif brightness > target+margin:
       toSet = prev - 0.05
-      if(toSet <= 0):
+      if(toSet <= 0 & status):
         print("Turning lamp off ")
         status = False
         hub.device_off('eba972f3-c624-436f-b49a-e4bae033eb2c')
-        newprev = 0
+        previousSetBrigthness = 0
       else:
         hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=200)
-        newprev = toSet
+        previousSetBrigthness = toSet
 
       print("successfully modified brightness to ", toSet)
 
@@ -67,64 +72,25 @@ def Automation(target, prev, margin, status):
       print("Gang Gang, in target")
 
     
-    sleep(0.2)
-    return newprev
+    sleep(0.5)
+    return previousSetBrigthness
   except:
     print("error connecting to cozify", sys.exc_info()[0])
-    sleep(0.2)
-
-  
+    sleep(0.1)
 
 def main():
 
   # SET STARTING VALUES
 
-
-  global target
   global previousSetBrigthness
-  global margin
-  global automation
-  global status
 
   #code starts here
-  mainRun = True
-  while mainRun:
+  while 1:
     try: 
-      if automation:
-        newprev = Automation(target,previousSetBrigthness,margin,status)
-        previousSetBrigthness = newprev
-        print(f"{previousSetBrigthness}")
+      Automation()
+      print(f"{previousSetBrigthness}")
       
     except KeyboardInterrupt :
-      mainRun = False
+      run = False
 
-thread = threading.Thread(target=main)
-thread.start()
-
-run = True
-while run:
-  try:
-    #SETTING BRIGHTNESSS TARGET
-    if keyboard.is_pressed('q'):
-      target =- 100
-    if keyboard.is_pressed('w'):
-      target = ogtarget
-    if keyboard.is_pressed('e'):
-      target =+ 100
-    
-    # COLOR TEMPERATURE DOESN'T DO SHIT RIGHT NOW
-    if keyboard.is_pressed('a'):
-      moodtarget =- 100
-    if keyboard.is_pressed('s'):
-      moodtarget =+ 100
-
-    # TOGGLE AUTOMATION
-    if keyboard.is_pressed('t'):
-      automation = not automation
-  except KeyboardInterrupt:
-    run = False
-  except:
-    print('There was a ****** error!', sys.exc_info()[0])
-
-thread.do_run = False
-thread.join()
+main()
