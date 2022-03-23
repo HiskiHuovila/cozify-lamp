@@ -74,6 +74,8 @@ def Automation(target, prev, margin, status):
     print("error connecting to cozify", sys.exc_info()[0])
     sleep(0.5)
 
+  
+
 def main():
 
   # SET STARTING VALUES
@@ -86,7 +88,8 @@ def main():
   global status
 
   #code starts here
-  while 1:
+  mainRun = True
+  while mainRun:
     try: 
       if automation:
         newprev = Automation(target,previousSetBrigthness,margin,status)
@@ -94,7 +97,7 @@ def main():
         print(f"{previousSetBrigthness}")
       
     except KeyboardInterrupt :
-      run = False
+      mainRun = False
 
 thread = threading.Thread(target=main)
 thread.start()
@@ -122,7 +125,7 @@ while run:
   except KeyboardInterrupt:
     run = False
   except:
-    print('There was a ****** error!')
+    print('There was a ****** error!', sys.exc_info()[0])
 
 thread.do_run = False
 thread.join()
