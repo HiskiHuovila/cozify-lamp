@@ -57,7 +57,7 @@ def Automation():
     # TURN DOWN IF HIGHER THAN TARGET
     elif brightness > target+margin:
       toSet = previousSetBrigthness - 0.05
-      if(toSet <= 0 & status):
+      if(toSet <= 0):
         print("Turning lamp off ")
         status = False
         hub.device_off('eba972f3-c624-436f-b49a-e4bae033eb2c')
