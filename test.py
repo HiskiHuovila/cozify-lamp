@@ -47,10 +47,12 @@ def Automation():
         hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=200)
         previousSetBrigthness = toSet
         status = True
-      else:
+      elif toSet < 1:
         hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=200)
         previousSetBrigthness = toSet
         print("successfully modified brightness to ",toSet)
+      else
+        print("sdfihl")
 
     # TURN DOWN IF HIGHER THAN TARGET
     elif brightness > target+margin:
