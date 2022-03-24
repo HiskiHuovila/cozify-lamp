@@ -23,6 +23,7 @@ margin = max(target/8, 10)
 #automation = True
 hub.device_on('eba972f3-c624-436f-b49a-e4bae033eb2c')
 status = True   #boolean on off
+automation = True
 # AUTOMATION LOOP
 def Automation():
 
@@ -93,6 +94,7 @@ def main():
   global target
   global default
   global status
+  global automation
 
   run = True
   #code starts here
@@ -119,15 +121,18 @@ def main():
           elif c == 'd':
             hub.device_off('eba972f3-c624-436f-b49a-e4bae033eb2c')
             status = False
+            automation = False
             print('Turned lamp off')
           elif c == 'e':
             hub.device_on('eba972f3-c624-436f-b49a-e4bae033eb2c')
             status = True
+            automation = True
             print('Turned lamp on')
           else:
             print("unknown keyboard input")
 
-        Automation()
+        if automation:
+          Automation()
         
       except KeyboardInterrupt :
         run = False
