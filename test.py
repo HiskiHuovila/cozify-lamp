@@ -1,6 +1,7 @@
 from enum import auto
 from os import stat
 from time import sleep
+from urllib.parse import DefragResult
 from cozify import hub
 from cozify import cloud
 from envirophat import light
@@ -15,8 +16,8 @@ print("Started operating heavy machinery, status: ", cloud.authenticate())
 
 
 # SET STARTING VALUES
-
-target = 3000
+default = input("Tell target pls:")
+target = default
 previousSetBrigthness = 0.5
 margin = 100
 #automation = True
@@ -91,6 +92,7 @@ def main():
 
   global previousSetBrigthness
   global target
+  global default
 
   run = True
   #code starts here
@@ -110,6 +112,9 @@ def main():
             print("target modified to ", target)
           elif c == 's':
             target -= 100
+            print("target modified to ", target)
+          elif c == 'r':
+            target = default
             print("target modified to ", target)
           else:
             print("unknown keyboard input")
