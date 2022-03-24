@@ -92,6 +92,7 @@ def main():
   global previousSetBrigthness
   global target
   global default
+  global status
 
   run = True
   #code starts here
@@ -115,6 +116,14 @@ def main():
           elif c == 'r':
             target = default
             print("target modified to ", target)
+          elif c == 'd':
+            hub.device_off('eba972f3-c624-436f-b49a-e4bae033eb2c')
+            status = False
+            print('Turned lamp off')
+          elif c == 'e':
+            hub.device_on('eba972f3-c624-436f-b49a-e4bae033eb2c')
+            status = True
+            print('Turned lamp on')
           else:
             print("unknown keyboard input")
 
