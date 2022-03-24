@@ -29,13 +29,7 @@ def Automation():
   global status  #boolean on off
 
   try:
-    if hub.ping:
-      print("connected to device")
-    #devices = hub.devices()
-    #for id, dev in devices.items():
-    # print(id,dev['name'])
     brightness = light.light()
-    print('measure1:', brightness)
 
     toSet = 0.5
 
@@ -43,39 +37,37 @@ def Automation():
     if brightness < target-margin:
       toSet = min(previousSetBrigthness + 0.05,1)
       if not status:        #checking is lamp off
-        print("Turning lamp on")
         hub.device_on('eba972f3-c624-436f-b49a-e4bae033eb2c')
         hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=200)
         previousSetBrigthness = toSet
-        print("successfully modified brightness to: ",previousSetBrigthness)
+        print(f"Measured: {brightness}. Turned lamp on and set light brightness to {toSet}", end='\r')
         status = True    #setting lamp on
       elif toSet < 1:
         hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=100)
         previousSetBrigthness = toSet
-        print("successfully modified brightness to: ",previousSetBrigthness)
+        print(f"Measured: {brightness}. Set light brightness to {toSet}", end='\r')
       else:
-        print("maximum lighting")
+        print(f"Measured: {brightness}. Light stays at brightness {toSet}", end='\r')
 
     # TURN DOWN IF HIGHER THAN TARGET
     elif brightness > target+margin:
       toSet = previousSetBrigthness - 0.05
       if(toSet <= 0 and status):
-        print("Turning lamp off ")
+        print(f"Measured: {brightness}. Turning lamp off", end='\r')
         status = False
         hub.device_off('eba972f3-c624-436f-b49a-e4bae033eb2c')
         previousSetBrigthness = 0
       elif(not status):
-        print("lamp is off")
-
+        print(f"Measured: {brightness}. Turning is off", end='\r')
       else:
         hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=100)
         previousSetBrigthness = toSet
-        print("successfully modified brightness to ", previousSetBrigthness)
+        print(f"Measured: {brightness}. Turned lamp on and set light brightness to {toSet}", end='\r')
 
       
 
     else:
-      print("Gang Gang, in target")
+      print(f"Measured: {brightness}. In target", end='\r')
 
     
     sleep(0.2)
