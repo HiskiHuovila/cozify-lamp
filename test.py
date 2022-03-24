@@ -90,6 +90,7 @@ def main():
   # SET STARTING VALUES
 
   global previousSetBrigthness
+  global target
 
   run = True
   #code starts here
@@ -105,9 +106,13 @@ def main():
           if c == '\x1b':         # x1b is ESC
             run = False
           elif c == 'w':
-            run = False
+            target += 100
+            print("target modified to ", target)
           elif c == 's':
-            run = False
+            target -= 100
+            print("target modified to ", target)
+          else:
+            print("unknown keyboard input")
 
         Automation()
         
