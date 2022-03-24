@@ -40,34 +40,34 @@ def Automation():
         hub.device_on('eba972f3-c624-436f-b49a-e4bae033eb2c')
         hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=200)
         previousSetBrigthness = toSet
-        print(f"Measured: {brightness}. Turned lamp on and set light brightness to {toSet}", end='\r')
+        print(f"Measured: {brightness}. Turned lamp on and set light brightness to {toSet}", end='\x1b[1K\r')
         status = True    #setting lamp on
       elif toSet < 1:
         hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=100)
         previousSetBrigthness = toSet
-        print(f"Measured: {brightness}. Set light brightness to {toSet}", end='\r')
+        print(f"Measured: {brightness}. Set light brightness to {toSet}", end='\x1b[1K\r')
       else:
-        print(f"Measured: {brightness}. Light stays at brightness {toSet}", end='\r')
+        print(f"Measured: {brightness}. Light stays at brightness {toSet}", end='\x1b[1K\r')
 
     # TURN DOWN IF HIGHER THAN TARGET
     elif brightness > target+margin:
       toSet = previousSetBrigthness - 0.05
       if(toSet <= 0 and status):
-        print(f"Measured: {brightness}. Turning lamp off", end='\r')
+        print(f"Measured: {brightness}. Turning lamp off", end='\x1b[1K\r')
         status = False
         hub.device_off('eba972f3-c624-436f-b49a-e4bae033eb2c')
         previousSetBrigthness = 0
       elif(not status):
-        print(f"Measured: {brightness}. Turning is off", end='\r')
+        print(f"Measured: {brightness}. Turning is off", end='\x1b[1K\r')
       else:
         hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=100)
         previousSetBrigthness = toSet
-        print(f"Measured: {brightness}. Turned lamp on and set light brightness to {toSet}", end='\r')
+        print(f"Measured: {brightness}. Turned lamp on and set light brightness to {toSet}", end='\x1b[1K\r')
 
       
 
     else:
-      print(f"Measured: {brightness}. In target", end='\r')
+      print(f"Measured: {brightness}. In target", end='\x1b[1K\r')
 
     
     sleep(0.2)
