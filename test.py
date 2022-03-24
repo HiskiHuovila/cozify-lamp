@@ -93,23 +93,23 @@ def main():
   run = True
   #code starts here
 
-old_settings = termios.tcgetattr(sys.stdin)
-try:
-  tty.setcbreak(sys.stdin.fileno())
+  old_settings = termios.tcgetattr(sys.stdin)
+  try:
+    tty.setcbreak(sys.stdin.fileno())
 
-  while run:
-    try: 
-      if isData():
-        c = sys.stdin.read(1)
-        if c == '\x1b':         # x1b is ESC
-          run = False
-      Automation()
-      
-    except KeyboardInterrupt :
-      run = False
+    while run:
+      try: 
+        if isData():
+          c = sys.stdin.read(1)
+          if c == '\x1b':         # x1b is ESC
+            run = False
+        Automation()
+        
+      except KeyboardInterrupt :
+        run = False
 
-finally:
-    termios.tcsetattr(sys.stdin, termios.TCSADRAIN, old_settings)
+  finally:
+      termios.tcsetattr(sys.stdin, termios.TCSADRAIN, old_settings)
 
 
 
