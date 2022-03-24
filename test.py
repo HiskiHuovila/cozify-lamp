@@ -104,6 +104,11 @@ def main():
           c = sys.stdin.read(1)
           if c == '\x1b':         # x1b is ESC
             run = False
+          elif c == 'w':
+            run = False
+          elif c == 's':
+            run = False
+
         Automation()
         
       except KeyboardInterrupt :
