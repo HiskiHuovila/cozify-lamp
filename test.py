@@ -4,9 +4,12 @@ from time import sleep
 from cozify import hub
 from cozify import cloud
 from envirophat import light
-import threading
-import keyboard
+#import threading
+#import keyboard
 import sys
+import select
+import tty
+import termios
 
 print("Started operating heavy machinery, status: ", cloud.authenticate())
 
@@ -76,6 +79,11 @@ def Automation():
     print("error connecting to cozify", sys.exc_info()[0])
     sleep(0.2)
 
+
+
+def isData():
+    return select.select([sys.stdin], [], [], 0) == ([sys.stdin], [], [])
+
 def main():
 
   # SET STARTING VALUES
@@ -84,11 +92,25 @@ def main():
 
   run = True
   #code starts here
+
+old_settings = termios.tcgetattr(sys.stdin)
+try:
+  tty.setcbreak(sys.stdin.fileno())
+
   while run:
     try: 
+      if isData():
+        c = sys.stdin.read(1)
+        if c == '\x1b':         # x1b is ESC
+          run = False
       Automation()
       
     except KeyboardInterrupt :
       run = False
+
+finally:
+    termios.tcsetattr(sys.stdin, termios.TCSADRAIN, old_settings)
+
+
 
 main()
