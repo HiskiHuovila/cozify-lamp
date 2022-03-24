@@ -20,6 +20,7 @@ target = 3000
 previousSetBrigthness = 0.5
 margin = 100
 #automation = True
+hub.device_on('eba972f3-c624-436f-b49a-e4bae033eb2c')
 status = True   #boolean on off
 
 # AUTOMATION LOOP
