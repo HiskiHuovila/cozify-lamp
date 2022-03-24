@@ -19,11 +19,10 @@ print("Started operating heavy machinery, status: ", cloud.authenticate())
 default = int(input("Tell target pls:"))
 target = default
 previousSetBrigthness = 0.5
-margin = 100
+margin = max(target/8, 10)
 #automation = True
 hub.device_on('eba972f3-c624-436f-b49a-e4bae033eb2c')
 status = True   #boolean on off
-3000
 # AUTOMATION LOOP
 def Automation():
 
@@ -40,23 +39,23 @@ def Automation():
 
     # TURN UP IF LOWER THAN TARGET
     if brightness < target-margin:
-      toSet = min(previousSetBrigthness + 0.05,1)
+      toSet = min(previousSetBrigthness + 0.02,1)
       if not status:        #checking is lamp off
         hub.device_on('eba972f3-c624-436f-b49a-e4bae033eb2c')
         hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=200)
         previousSetBrigthness = toSet
-        print(f"Measured: {brightness}. Turned lamp on and set light brightness to {round(toSet,1)}")
+        print(f"Measured: {brightness}. Turned lamp on and set light brightness to {round(toSet,2)}")
         status = True    #setting lamp on
       elif toSet < 1:
-        hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=100)
+        hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=50)
         previousSetBrigthness = toSet
-        print(f"Measured: {brightness}. Set light brightness to {round(toSet,1)}")
+        print(f"Measured: {brightness}. Set light brightness to {round(toSet,2)}")
       else:
-        print(f"Measured: {brightness}. Light stays at brightness {round(toSet,1)}")
+        print(f"Measured: {brightness}. Light stays at brightness {round(toSet,2)}")
 
     # TURN DOWN IF HIGHER THAN TARGET
     elif brightness > target+margin:
-      toSet = previousSetBrigthness - 0.05
+      toSet = previousSetBrigthness - 0.02
       if(toSet <= 0 and status):
         print(f"Measured: {brightness}. Turning lamp off")
         status = False
@@ -65,9 +64,9 @@ def Automation():
       elif(not status):
         print(f"Measured: {brightness}. Turning is off")
       else:
-        hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=100)
+        hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=50)
         previousSetBrigthness = toSet
-        print(f"Measured: {brightness}. Turned lamp on and set light brightness to {round(toSet,1)}")
+        print(f"Measured: {brightness}. Turned lamp on and set light brightness to {round(toSet,2)}")
 
       
 
@@ -75,11 +74,11 @@ def Automation():
       print(f"Measured: {brightness}. In target")
 
     
-    sleep(0.2)
+    sleep(0.1)
     return previousSetBrigthness
   except:
     print("error connecting to cozify", sys.exc_info()[0])
-    sleep(0.2)
+    sleep(0.1)
 
 
 
