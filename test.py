@@ -44,14 +44,14 @@ def Automation():
         hub.device_on('eba972f3-c624-436f-b49a-e4bae033eb2c')
         hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=200)
         previousSetBrigthness = toSet
-        print(f"Measured: {brightness}. Turned lamp on and set light brightness to {toSet}")
+        print(f"Measured: {brightness}. Turned lamp on and set light brightness to {round(toSet,1)}")
         status = True    #setting lamp on
       elif toSet < 1:
         hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=100)
         previousSetBrigthness = toSet
-        print(f"Measured: {brightness}. Set light brightness to {toSet}")
+        print(f"Measured: {brightness}. Set light brightness to {round(toSet,1)}")
       else:
-        print(f"Measured: {brightness}. Light stays at brightness {toSet}")
+        print(f"Measured: {brightness}. Light stays at brightness {round(toSet,1)}")
 
     # TURN DOWN IF HIGHER THAN TARGET
     elif brightness > target+margin:
@@ -66,7 +66,7 @@ def Automation():
       else:
         hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=100)
         previousSetBrigthness = toSet
-        print(f"Measured: {brightness}. Turned lamp on and set light brightness to {toSet}")
+        print(f"Measured: {brightness}. Turned lamp on and set light brightness to {round(toSet,1)}")
 
       
 
