@@ -49,7 +49,7 @@ def Automation():
         print("successfully modified brightness to: ",previousSetBrigthness)
         status = True    #setting lamp on
       elif toSet < 1:
-        hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=200)
+        hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=100)
         previousSetBrigthness = toSet
         print("successfully modified brightness to: ",previousSetBrigthness)
       else:
@@ -64,7 +64,7 @@ def Automation():
         hub.device_off('eba972f3-c624-436f-b49a-e4bae033eb2c')
         previousSetBrigthness = 0
       else:
-        hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=200)
+        hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=100)
         previousSetBrigthness = toSet
 
       print("successfully modified brightness to ", previousSetBrigthness)
@@ -73,11 +73,11 @@ def Automation():
       print("Gang Gang, in target")
 
     
-    sleep(0.3)
+    sleep(0.2)
     return previousSetBrigthness
   except:
     print("error connecting to cozify", sys.exc_info()[0])
-    sleep(0.3)
+    sleep(0.2)
 
 def main():
 
