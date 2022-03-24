@@ -1,4 +1,5 @@
 from enum import auto
+from os import stat
 from time import sleep
 from cozify import hub
 from cozify import cloud
@@ -63,11 +64,15 @@ def Automation():
         status = False
         hub.device_off('eba972f3-c624-436f-b49a-e4bae033eb2c')
         previousSetBrigthness = 0
+      elif(not status):
+        print("lamp is off")
+
       else:
         hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=100)
         previousSetBrigthness = toSet
+        print("successfully modified brightness to ", previousSetBrigthness)
 
-      print("successfully modified brightness to ", previousSetBrigthness)
+      
 
     else:
       print("Gang Gang, in target")
