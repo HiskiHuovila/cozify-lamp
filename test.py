@@ -94,7 +94,6 @@ def Automation():
     XYZ = colour.sRGB_to_XYZ([r /255,g /255,b /255])
     xy = colour.XYZ_to_xy(XYZ)
     CCT = colour.xy_to_CCT(xy, 'hernandez1999')
-    print(abs(int(CCT) - prevColor))
 
     if colorstatus:
       if(CCT < 2200):
@@ -108,7 +107,7 @@ def Automation():
           prevColor = 4500
 
       else:
-        if( abs(CCT - prevColor) > margin):
+        if( abs(int(CCT) - prevColor) > margin):
           hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=CCT, transition=20)
           prevColor = CCT
           
