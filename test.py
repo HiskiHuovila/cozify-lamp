@@ -162,7 +162,7 @@ def main():
               status = False
               automation = False
               print('Turned lamp off')
-            if not status:
+            elif not status:
               hub.device_on('eba972f3-c624-436f-b49a-e4bae033eb2c')
               status = True
               automation = True
