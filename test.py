@@ -149,42 +149,42 @@ def main():
             run = False
           elif c == 'w':
             target += 100
-            print("target modified to ", target)
+            print("\nTarget modified to ", target)
           elif c == 's':
             target -= 100
-            print("target modified to ", target)
+            print("\nTarget modified to ", target)
           elif c == 'r':
             target = default
-            print("target modified to ", target)
+            print("\nTarget modified to ", target)
           elif c == 'e':
             if status:
               hub.device_off('eba972f3-c624-436f-b49a-e4bae033eb2c')
               status = False
               automation = False
-              print('Turned lamp off')
+              print('\nTurned lamp off')
             elif not status:
               hub.device_on('eba972f3-c624-436f-b49a-e4bae033eb2c')
               status = True
               automation = True
-              print('Turned lamp on')
+              print('\nTurned lamp on')
           elif c == 'd':
             colorstatus = not colorstatus
-            print(f'Color automation: {colorstatus}')
+            print(f'\nColor automation: {colorstatus}')
           elif c == 'q':
             target += 1000
-            print("target modified to ", target)
+            print("\nTarget modified to ", target)
           elif c == 'a':
             target -= 1000
-            print("target modified to ", target)
+            print("\nTarget modified to ", target)
           elif c == 't':
-            print(f'STATUS:\nTarget: {target}\nBrightness: {previousSetBrigthness}\nColor Temperature: {prevColor}\nAutomation mode: {automation}\nColor automation mode: {colorstatus}\nDebug mode: {debug}')
+            print(f'\nSTATUS:\nTarget: {target}\nBrightness: {previousSetBrigthness}\nColor Temperature: {prevColor}\nAutomation mode: {automation}\nColor automation mode: {colorstatus}\nDebug mode: {debug}')
           elif c == 'g':
             debug = not debug
-            print(f'Debug mode {debug}')
+            print(f'\nDebug mode {debug}')
           elif c == 'h':
-            print(f'HELP:\nToggle automation off/on -> e \nTurn target up/down by 100 -> d / s\nTurn target up/down by 1000 -> q / a \nReset target to original -> r\nShow status -> t\nToggle debug mode -> g\nExit application  -> ESC')
+            print(f'\nHELP:\nToggle automation off/on -> e \nTurn target up/down by 100 -> d / s\nTurn target up/down by 1000 -> q / a \nReset target to original -> r\nShow status -> t\nToggle debug mode -> g\nExit application  -> ESC')
           else:
-            print("unknown keyboard input")
+            print("\nUnknown keyboard input")
 
         if automation:
           Automation()
