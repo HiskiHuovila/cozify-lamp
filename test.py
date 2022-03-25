@@ -102,13 +102,20 @@ def Automation():
       if(CCT < 2200):
         if(prevColor > 2250):
           hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=2200, transition=20)
+          prevColor = 2200
 
       elif(CCT > 4500):
         if(prevColor < 4450):
           hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=4500, transition=20)
+          prevColor = 4500
+
       else:
         if( abs(CCT - prevColor) > margin):
           hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=CCT, transition=20)
+          prevColor = CCT
+          
+    if debug:
+      print(f"Measured color: {CCT}. Lamp Color: {prevColor}")
 
     sleep(0.1)
   except:
