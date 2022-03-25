@@ -1,19 +1,18 @@
 from enum import auto
 from os import stat
 from time import sleep
+from turtle import color
 from urllib.parse import DefragResult
 from cozify import hub
 from cozify import cloud
 from envirophat import light
-#import threading
-#import keyboard
+import colour
 import sys
 import select
 import tty
 import termios
 
 print("Started operating heavy machinery, status: ", cloud.authenticate())
-
 
 # SET STARTING VALUES
 default = int(input("Tell target pls:"))
@@ -24,64 +23,97 @@ margin = max(target/8, 10)
 hub.device_on('eba972f3-c624-436f-b49a-e4bae033eb2c')
 status = True   #boolean on off
 automation = True
+prevColor = 2700
+colormargin = 1000
+colorstatus = True
+debug = False
+
+
 # AUTOMATION LOOP
 def Automation():
 
   global target
   global previousSetBrigthness
   global margin
-  #global automation
-  global status  #boolean on off
+  global prevColor
+  global status
+  global debug
+  global colorstatus
 
   try:
     brightness = light.light()
+    r, g, b = brightness.rgb()
+
+    XYZ = colour.sRGB_to_XYZ([r,g,b] / 255)
+    xy = colour.XYZ_to_xy(XYZ)
+    CCT = colour.xy_to_CCT(xy, 'hernandez1999')
 
     toSet = 0.5
 
     # TURN UP IF LOWER THAN TARGET
     if brightness < target-margin:
       toSet = min(previousSetBrigthness + 0.02,1)
+
       if not status:        #checking is lamp off
         hub.device_on('eba972f3-c624-436f-b49a-e4bae033eb2c')
-        hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=200)
+        hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=20)
         previousSetBrigthness = toSet
-        print(f"Measured: {brightness}. Turned lamp on and set light brightness to {round(toSet,2)}")
         status = True    #setting lamp on
+        if debug: 
+          print(f"Measured: {brightness}. Turned lamp on and set light brightness to {round(toSet,2)}")
+
       elif toSet < 1:
-        hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=50)
+        hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=20)
         previousSetBrigthness = toSet
-        print(f"Measured: {brightness}. Set light brightness to {round(toSet,2)}")
+        if debug:
+          print(f"Measured: {brightness}. Set light brightness to {round(toSet,2)}")
+
       else:
-        print(f"Measured: {brightness}. Light stays at brightness {round(toSet,2)}")
+        if debug:
+          print(f"Measured: {brightness}. Light stays at brightness {round(toSet,2)}")
 
     # TURN DOWN IF HIGHER THAN TARGET
     elif brightness > target+margin:
       toSet = previousSetBrigthness - 0.02
+
       if(toSet <= 0 and status):
-        print(f"Measured: {brightness}. Turning lamp off")
         status = False
         hub.device_off('eba972f3-c624-436f-b49a-e4bae033eb2c')
         previousSetBrigthness = 0
-      elif(not status):
-        print(f"Measured: {brightness}. Turning is off")
-      else:
-        hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=50)
-        previousSetBrigthness = toSet
-        print(f"Measured: {brightness}. Turned lamp on and set light brightness to {round(toSet,2)}")
+        if debug:
+          print(f"Measured: {brightness}. Turning lamp off")
 
-      
+      elif(not status):
+        if debug:
+          print(f"Measured: {brightness}. Turning is off")
+
+      else:
+        hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=20)
+        previousSetBrigthness = toSet
+        if debug:
+          print(f"Measured: {brightness}. Turned lamp on and set light brightness to {round(toSet,2)}")
 
     else:
-      print(f"Measured: {brightness}. In target")
+      if debug:
+       print(f"Measured: {brightness}. In target")
 
-    
+    # COLOR TEMPERATURE
+    if colorstatus:
+      if(CCT < 2200):
+        if(prevColor > 2250):
+          hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=2200, transition=20)
+
+      elif(CCT > 4500):
+        if(prevColor < 4450):
+          hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=4500, transition=20)
+      else:
+        if( abs(CCT - prevColor) > margin):
+          hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=CCT, transition=20)
+
     sleep(0.1)
-    return previousSetBrigthness
   except:
     print("error connecting to cozify", sys.exc_info()[0])
     sleep(0.1)
-
-
 
 def isData():
     return select.select([sys.stdin], [], [], 0) == ([sys.stdin], [], [])
@@ -95,6 +127,8 @@ def main():
   global default
   global status
   global automation
+  global debug
+  global colorstatus
 
   run = True
   #code starts here
@@ -118,16 +152,33 @@ def main():
           elif c == 'r':
             target = default
             print("target modified to ", target)
-          elif c == 'd':
-            hub.device_off('eba972f3-c624-436f-b49a-e4bae033eb2c')
-            status = False
-            automation = False
-            print('Turned lamp off')
           elif c == 'e':
-            hub.device_on('eba972f3-c624-436f-b49a-e4bae033eb2c')
-            status = True
-            automation = True
-            print('Turned lamp on')
+            if status:
+              hub.device_off('eba972f3-c624-436f-b49a-e4bae033eb2c')
+              status = False
+              automation = False
+              print('Turned lamp off')
+            if not status:
+              hub.device_on('eba972f3-c624-436f-b49a-e4bae033eb2c')
+              status = True
+              automation = True
+              print('Turned lamp on')
+          elif c == 'd':
+            colorstatus = not colorstatus
+            print(f'Color automation: {colorstatus}')
+          elif c == 'q':
+            target += 1000
+            print("target modified to ", target)
+          elif c == 'a':
+            target -= 1000
+            print("target modified to ", target)
+          elif c == 't':
+            print(f'Target: {target}\nBrightness: {previousSetBrigthness}\nColor Temperature: {prevColor}\nAutomation mode: {automation}\nDebug mode: {debug}')
+          elif c == 'g':
+            debug = not debug
+            print(f'Debug mode {debug}')
+          elif c == 'h':
+            print(f'HELP:\nToggle automation off/on -> e \nTurn target up/down by 100 -> d / s\nTurn target up/down by 1000 -> q / a \nReset target to original -> r\nShow status -> t\nToggle debug mode -> g\nExit application  -> ESC')
           else:
             print("unknown keyboard input")
 
