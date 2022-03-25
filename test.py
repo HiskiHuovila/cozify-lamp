@@ -107,6 +107,7 @@ def Automation():
           prevColor = 4500
 
       else:
+        print("!")
         if( abs(int(CCT) - prevColor) > colormargin):
           hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=CCT, transition=20)
           prevColor = CCT
