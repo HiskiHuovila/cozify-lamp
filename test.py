@@ -89,11 +89,11 @@ def Automation():
 
     # # COLOR TEMPERATURE
     
-    # r, g, b = light.light.rgb()
-    # XYZ = colour.sRGB_to_XYZ([r,g,b] / 255)
-    # xy = colour.XYZ_to_xy(XYZ)
-    # CCT = colour.xy_to_CCT(xy, 'hernandez1999')
-    # print(r,g,b)
+    r, g, b = light.light.rgb()
+    XYZ = colour.sRGB_to_XYZ([r,g,b] / 255)
+    xy = colour.XYZ_to_xy(XYZ)
+    CCT = colour.xy_to_CCT(xy, 'hernandez1999')
+    print(r,g,b)
 
     # if colorstatus:
     #   if(CCT < 2200):
