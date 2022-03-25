@@ -53,7 +53,7 @@ def Automation():
         if debug: 
           print(f"Measured: {brightness}. Turned lamp on and set light brightness to {round(toSet,2)}")
 
-      elif toSet < 1:
+      elif toSet <= 1:
         hub.light_brightness('eba972f3-c624-436f-b49a-e4bae033eb2c', toSet, transition=20)
         previousSetBrigthness = toSet
         if debug:
@@ -107,7 +107,7 @@ def Automation():
           prevColor = 4500
 
       else:
-        if( abs(int(CCT) - prevColor) > margin):
+        if( abs(int(CCT) - prevColor) > colormargin):
           hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=CCT, transition=20)
           prevColor = CCT
           
