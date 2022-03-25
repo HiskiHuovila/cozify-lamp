@@ -15,7 +15,7 @@ print("Started operating heavy machinery, status: ", cloud.authenticate())
 default = int(input("Tell target pls:"))
 target = default
 previousSetBrigthness = 0.5
-margin = max(target/8, 10)
+margin = 200
 #automation = True
 hub.device_on('eba972f3-c624-436f-b49a-e4bae033eb2c')
 status = True   #boolean on off
