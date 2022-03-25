@@ -10,10 +10,9 @@ import tty
 import termios
 
 print("Started operating heavy machinery, status: ", cloud.authenticate())
-print(f'\nHELP:\nToggle automation off/on -> e \nToggle light color automation -> d\nTurn target up/down by 100 -> d / s\nTurn target up/down by 1000 -> q / a \nManually set color temperature -> 1,2,3,4,5 or 6\nReset target to original -> r\nShow status -> t\nToggle debug mode -> g\nShow this help -> h\nExit application  -> ESC')
 
 # SET STARTING VALUES
-default = int(input("Tell target pls:"))
+default = int(input("Tell target pls, good default 5000: "))
 target = default
 previousSetBrigthness = 0.5
 margin = 200
@@ -26,6 +25,7 @@ colormargin = 1000
 colorstatus = True
 debug = False
 
+print(f'\nHELP:\nToggle automation off/on -> e \nToggle light color automation -> d\nTurn target up/down by 100 -> d / s\nTurn target up/down by 1000 -> q / a \nManually set color temperature -> 1,2,3,4,5 or 6\nReset target to original -> r\nShow status -> t\nToggle debug mode -> g\nShow this help -> h\nExit application  -> ESC')
 
 # AUTOMATION LOOP
 def Automation():
