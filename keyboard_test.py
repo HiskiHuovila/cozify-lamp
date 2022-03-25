@@ -1,6 +1,4 @@
-from evdev import InputDevice, categorize, ecodes
+from envirophat import light
 
-device = InputDevice("/dev/input/event0") # my keyboard
-for event in device.read_loop():
-    if event.type == ecodes.EV_KEY:
-        print(categorize(event))
+r,g,b = light.rgb()
+print(r,g,b)

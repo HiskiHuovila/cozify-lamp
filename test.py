@@ -90,9 +90,9 @@ def Automation():
     # # COLOR TEMPERATURE
     
     r, g, b = light.rgb()
-    XYZ = colour.sRGB_to_XYZ([r,g,b] / 255)
-    xy = colour.XYZ_to_xy(XYZ)
-    CCT = colour.xy_to_CCT(xy, 'hernandez1999')
+    #XYZ = colour.sRGB_to_XYZ([r,g,b] / 255)
+    #xy = colour.XYZ_to_xy(XYZ)
+    #CCT = colour.xy_to_CCT(xy, 'hernandez1999')
     print(f'R:{r},G:{g},B:{b}')
 
     # if colorstatus:
