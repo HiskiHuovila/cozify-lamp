@@ -177,7 +177,7 @@ def main():
             target -= 1000
             print("target modified to ", target)
           elif c == 't':
-            print(f'STATUS:\nTarget: {target}\nBrightness: {previousSetBrigthness}\nColor Temperature: {prevColor}\nAutomation mode: {automation}\nDebug mode: {debug}')
+            print(f'STATUS:\nTarget: {target}\nBrightness: {previousSetBrigthness}\nColor Temperature: {prevColor}\nAutomation mode: {automation}\nColor automation mode: {colorstatus}\nDebug mode: {debug}')
           elif c == 'g':
             debug = not debug
             print(f'Debug mode {debug}')
