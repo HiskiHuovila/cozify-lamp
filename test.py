@@ -10,6 +10,7 @@ import tty
 import termios
 
 print("Started operating heavy machinery, status: ", cloud.authenticate())
+print(f'\nHELP:\nToggle automation off/on -> e \nToggle light color automation -> d\nTurn target up/down by 100 -> d / s\nTurn target up/down by 1000 -> q / a \nManually set color temperature -> 1,2,3,4,5 or 6\nReset target to original -> r\nShow status -> t\nToggle debug mode -> g\nShow this help -> h\nExit application  -> ESC')
 
 # SET STARTING VALUES
 default = int(input("Tell target pls:"))
@@ -133,6 +134,7 @@ def main():
   global automation
   global debug
   global colorstatus
+  global prevColor
 
   run = True
   #code starts here
@@ -182,7 +184,7 @@ def main():
             debug = not debug
             print(f'\nDebug mode {debug}')
           elif c == 'h':
-            print(f'\nHELP:\nToggle automation off/on -> e \nToggle light color automation -> d\nTurn target up/down by 100 -> d / s\nTurn target up/down by 1000 -> q / a \nReset target to original -> r\nShow status -> t\nToggle debug mode -> g\nExit application  -> ESC')
+            print(f'\nHELP:\nToggle automation off/on -> e \nToggle light color automation -> d\nTurn target up/down by 100 -> d / s\nTurn target up/down by 1000 -> q / a \nManually set color temperature -> 1,2,3,4,5 or 6\nReset target to original -> r\nShow status -> t\nToggle debug mode -> g\nShow this help -> h\nExit application  -> ESC')
           elif c == '1':
             colorstatus = not colorstatus
             hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=2023, transition=20)
