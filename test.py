@@ -94,26 +94,25 @@ def Automation():
     XYZ = colour.sRGB_to_XYZ([r /255,g /255,b /255])
     xy = colour.XYZ_to_xy(XYZ)
     CCT = colour.xy_to_CCT(xy, 'hernandez1999')
-    print(f'{CCT} K')
 
-    # if colorstatus:
-    #   if(CCT < 2200):
-    #     if(prevColor > 2250):
-    #       hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=2200, transition=20)
-    #       prevColor = 2200
+    if colorstatus:
+      if(CCT < 2200):
+        if(prevColor > 2400):
+          hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=2200, transition=20)
+          prevColor = 2200
 
-    #   elif(CCT > 4500):
-    #     if(prevColor < 4450):
-    #       hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=4500, transition=20)
-    #       prevColor = 4500
+      elif(CCT > 4500):
+        if(prevColor < 4300):
+          hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=4500, transition=20)
+          prevColor = 4500
 
-    #   else:
-    #     if( abs(CCT - prevColor) > margin):
-    #       hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=CCT, transition=20)
-    #       prevColor = CCT
+      else:
+        if( abs(CCT - prevColor) > margin):
+          hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=CCT, transition=20)
+          prevColor = CCT
           
-    #   if debug:
-    #     print(f"Measured color: {CCT}. Lamp Color: {prevColor}")
+      if debug:
+        print(f"Measured color: {CCT}. Lamp Color: {prevColor}")
 
     sleep(0.1)
   except:
