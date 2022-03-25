@@ -3,6 +3,7 @@ from cozify import hub
 from cozify import cloud
 from envirophat import light
 import colour
+import numpy as np
 import sys
 import select
 import tty
@@ -91,9 +92,9 @@ def Automation():
     
     r, g, b = light.rgb()
     XYZ = colour.sRGB_to_XYZ([r /255,g /255,b /255])
-    #xy = colour.XYZ_to_xy(XYZ)
-    #CCT = colour.xy_to_CCT(xy, 'hernandez1999')
-    print(f'{XYZ} K')
+    xy = colour.XYZ_to_xy(XYZ)
+    CCT = colour.xy_to_CCT(xy, 'hernandez1999')
+    print(f'{CCT} K')
 
     # if colorstatus:
     #   if(CCT < 2200):
