@@ -96,10 +96,10 @@ def Automation():
     CCT = colour.xy_to_CCT(xy, 'hernandez1999')
 
     if colorstatus:
-      if(CCT < 2200):
+      if(CCT < 2203):
         if(prevColor > 2400):
-          hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=2200, transition=20)
-          prevColor = 2200
+          hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=2203, transition=20)
+          prevColor = 2203
 
       elif(CCT > 4500):
         if(prevColor < 4300):
@@ -107,7 +107,6 @@ def Automation():
           prevColor = 4500
 
       else:
-        print("!")
         if( abs(int(CCT) - prevColor) > colormargin):
           hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=CCT, transition=20)
           prevColor = CCT
@@ -178,12 +177,12 @@ def main():
             target -= 1000
             print("\nTarget modified to ", target)
           elif c == 't':
-            print(f'\nSTATUS:\nTarget: {target}\nBrightness: {previousSetBrigthness}\nColor Temperature: {prevColor}\nAutomation mode: {automation}\nColor automation mode: {colorstatus}\nDebug mode: {debug}')
+            print(f'\nSTATUS:\nTarget: {target}Measured Brightness: {light.light()}\nBrightness: {previousSetBrigthness}\nColor Temperature: {prevColor}\nAutomation mode: {automation}\nColor automation mode: {colorstatus}\nDebug mode: {debug}')
           elif c == 'g':
             debug = not debug
             print(f'\nDebug mode {debug}')
           elif c == 'h':
-            print(f'\nHELP:\nToggle automation off/on -> e \nTurn target up/down by 100 -> d / s\nTurn target up/down by 1000 -> q / a \nReset target to original -> r\nShow status -> t\nToggle debug mode -> g\nExit application  -> ESC')
+            print(f'\nHELP:\nToggle automation off/on -> e \nToggle light color automation -> d\nTurn target up/down by 100 -> d / s\nTurn target up/down by 1000 -> q / a \nReset target to original -> r\nShow status -> t\nToggle debug mode -> g\nExit application  -> ESC')
           else:
             print("\nUnknown keyboard input")
 
