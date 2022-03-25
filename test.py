@@ -94,6 +94,7 @@ def Automation():
     XYZ = colour.sRGB_to_XYZ([r /255,g /255,b /255])
     xy = colour.XYZ_to_xy(XYZ)
     CCT = colour.xy_to_CCT(xy, 'hernandez1999')
+    print(type(CCT))
 
     if colorstatus:
       if(CCT < 2200):
