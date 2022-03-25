@@ -133,7 +133,6 @@ def main():
   global automation
   global debug
   global colorstatus
-  global prevColor
 
   run = True
   #code starts here
@@ -146,69 +145,71 @@ def main():
       try: 
         if isData():
           c = sys.stdin.read(1)
-          match c:
-            case '\x1b': run = False
-            case 'w': 
-              target += 100
-              print("\nTarget modified to ", target)
-            case 's':
-              target -= 100
-              print("\nTarget modified to ", target)
-            case 'r':
-              target = default
-              print("\nTarget modified to ", target)
-            case 'e':
-              if status:
-                hub.device_off('eba972f3-c624-436f-b49a-e4bae033eb2c')
-                status = False
-                automation = False
-                print('\nTurned lamp off')
-              elif not status:
-                hub.device_on('eba972f3-c624-436f-b49a-e4bae033eb2c')
-                status = True
-                automation = True
-                print('\nTurned lamp on')
-            case 'd':
-              colorstatus = not colorstatus
-              print(f'\nColor automation: {colorstatus}')
-            case 'q':
-              target += 1000
-              print("\nTarget modified to ", target)
-            case 'a':
-              target -= 1000
-              print("\nTarget modified to ", target)
-            case 't':
-              print(f'\nSTATUS:\nTarget: {target}\nMeasured Brightness: {light.light()}\nBrightness: {previousSetBrigthness}\nColor Temperature: {prevColor}\nAutomation mode: {automation}\nColor automation mode: {colorstatus}\nDebug mode: {debug}')
-            case 'g':
-              debug = not debug
-              print(f'\nDebug mode {debug}')
-            case 'h':
-              print(f'\nHELP:\nToggle automation off/on -> e \nToggle light color automation -> d\nTurn target up/down by 100 -> d / s\nTurn target up/down by 1000 -> q / a \nManually set color temperature -> 1,2,3,4,5 and 6\nReset target to original -> r\nShow status -> t\nToggle debug mode -> g\nExit application  -> ESC')
-            case '1':
-              colorstatus = not colorstatus
-              hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=2023, transition=20)
-              prevColor = 2023
-              print(f'\nColor automation: {colorstatus}, Manual Temp {prevColor}')
-            case '2':
-              colorstatus = not colorstatus
-              hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=2523, transition=20)
-              prevColor = 2023
-              print(f'\nColor automation: {colorstatus}, Manual Temp {prevColor}')
-            case '3':
-              colorstatus = not colorstatus
-              hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=3023, transition=20)
-              prevColor = 2023
-              print(f'\nColor automation: {colorstatus}, Manual Temp {prevColor}')
-            case '4':
-              colorstatus = not colorstatus
-              hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=3523, transition=20)
-              prevColor = 2023
-              print(f'\nColor automation: {colorstatus}, Manual Temp {prevColor}')
-            case '6':
-              colorstatus = not colorstatus
-              hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=4500, transition=20)
-              prevColor = 2023
-              print(f'\nColor automation: {colorstatus}, Manual Temp {prevColor}')
+          if c == '\x1b':         # x1b is ESC
+            run = False
+          elif c == 'w':
+            target += 100
+            print("\nTarget modified to ", target)
+          elif c == 's':
+            target -= 100
+            print("\nTarget modified to ", target)
+          elif c == 'r':
+            target = default
+            print("\nTarget modified to ", target)
+          elif c == 'e':
+            if status:
+              hub.device_off('eba972f3-c624-436f-b49a-e4bae033eb2c')
+              status = False
+              automation = False
+              print('\nTurned lamp off')
+            elif not status:
+              hub.device_on('eba972f3-c624-436f-b49a-e4bae033eb2c')
+              status = True
+              automation = True
+              print('\nTurned lamp on')
+          elif c == 'd':
+            colorstatus = not colorstatus
+            print(f'\nColor automation: {colorstatus}')
+          elif c == 'q':
+            target += 1000
+            print("\nTarget modified to ", target)
+          elif c == 'a':
+            target -= 1000
+            print("\nTarget modified to ", target)
+          elif c == 't':
+            print(f'\nSTATUS:\nTarget: {target}\nMeasured Brightness: {light.light()}\nBrightness: {previousSetBrigthness}\nColor Temperature: {prevColor}\nAutomation mode: {automation}\nColor automation mode: {colorstatus}\nDebug mode: {debug}')
+          elif c == 'g':
+            debug = not debug
+            print(f'\nDebug mode {debug}')
+          elif c == 'h':
+            print(f'\nHELP:\nToggle automation off/on -> e \nToggle light color automation -> d\nTurn target up/down by 100 -> d / s\nTurn target up/down by 1000 -> q / a \nReset target to original -> r\nShow status -> t\nToggle debug mode -> g\nExit application  -> ESC')
+          elif c == '1':
+            colorstatus = not colorstatus
+            hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=2023, transition=20)
+            prevColor = 2023
+            print(f'\nColor automation: {colorstatus}, Manual Temp {prevColor}')
+          elif c == '2':
+            colorstatus = not colorstatus
+            hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=2523, transition=20)
+            prevColor = 2023
+            print(f'\nColor automation: {colorstatus}, Manual Temp {prevColor}')
+          elif c == '3':
+            colorstatus = not colorstatus
+            hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=3023, transition=20)
+            prevColor = 2023
+            print(f'\nColor automation: {colorstatus}, Manual Temp {prevColor}')
+          elif c == '4':
+            colorstatus = not colorstatus
+            hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=3523, transition=20)
+            prevColor = 2023
+            print(f'\nColor automation: {colorstatus}, Manual Temp {prevColor}')
+          elif c == '5':
+            colorstatus = not colorstatus
+            hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=4500, transition=20)
+            prevColor = 2023
+            print(f'\nColor automation: {colorstatus}, Manual Temp {prevColor}')
+          else:
+            print("\nUnknown keyboard input")
 
         if automation:
           Automation()
