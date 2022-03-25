@@ -184,31 +184,36 @@ def main():
             debug = not debug
             print(f'\nDebug mode {debug}')
           elif c == 'h':
-            print(f'\nHELP:\nToggle automation off/on -> e \nToggle light color automation -> d\nTurn target up/down by 100 -> d / s\nTurn target up/down by 1000 -> q / a \nManually set color temperature -> 1,2,3,4,5 or 6\nReset target to original -> r\nShow status -> t\nToggle debug mode -> g\nShow this help -> h\nExit application  -> ESC')
+            print(f'\nHELP:\nTurn lamp off/on -> e \nToggle light color automation -> d\nTurn target up/down by 100 -> d / s\nTurn target up/down by 1000 -> q / a \nManually set color temperature -> 1,2,3,4,5 or 6\nReset target to original -> r\nShow status -> t\nToggle debug mode -> g\nShow this help -> h\nExit application  -> ESC')
           elif c == '1':
             colorstatus = False
             hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=2203, transition=20)
-            prevColor = 2023
+            prevColor = 2223
             print(f'\nColor automation: {colorstatus}, Manual Temp {prevColor}')
           elif c == '2':
             colorstatus = False
             hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=2523, transition=20)
-            prevColor = 2023
+            prevColor = 2523
             print(f'\nColor automation: {colorstatus}, Manual Temp {prevColor}')
           elif c == '3':
             colorstatus = False
             hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=3023, transition=20)
-            prevColor = 2023
+            prevColor = 3023
             print(f'\nColor automation: {colorstatus}, Manual Temp {prevColor}')
           elif c == '4':
             colorstatus = False
             hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=3523, transition=20)
-            prevColor = 2023
+            prevColor = 3523
             print(f'\nColor automation: {colorstatus}, Manual Temp {prevColor}')
           elif c == '5':
             colorstatus = False
+            hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=4023, transition=20)
+            prevColor = 4023
+            print(f'\nColor automation: {colorstatus}, Manual Temp {prevColor}')
+          elif c == '6':
+            colorstatus = False
             hub.light_temperature('eba972f3-c624-436f-b49a-e4bae033eb2c', temperature=4500, transition=20)
-            prevColor = 2023
+            prevColor = 4500
             print(f'\nColor automation: {colorstatus}, Manual Temp {prevColor}')
           else:
             print("\nUnknown keyboard input")
